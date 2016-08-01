@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>后盾问答</title>
+	<meta name="keywords" content="后盾问答"/>
+	<meta name="description" content="后盾问答"/>
+	{hd include file="../Common/top.html"}
+	<link rel="stylesheet" href="Public/Home/Css/member.css" />
+
+<!--------------------中部-------------------->
+	<div id='center'>
+	{hd include file="../Common/left.html"}
+		<div id='right'>
+	
+			<p class='title'>{hd if $smarty.session.uid==$smarty.get.uid}我{hd else}Ta{hd /if}的首页</p>
+
+			<ul class='property'>
+				<li>金币：<span>{hd $userInfo.0.point}</span></li>
+				<li>经验值：<span>{hd $userInfo.0.exp}</span></li>
+				<li>采纳率：<span>{hd if $userInfo.0.answer!=0}
+					<td><a href="">{hd $userInfo.0.accept/$userInfo.0.answer*100|string_format:'%.2f'}%</a></td>
+					{hd else}
+					<td><a href="">0%</a></td>
+					{hd /if}</span></li>
+			</ul>
+			<div class='list'>
+				<p><span>{hd if $smarty.session.uid==$smarty.get.uid}我{hd else}Ta{hd /if}的提问 <b>(共{hd $allAsk}条)</b></span><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=ask">更多>></a></p>
+				<table>
+					{hd if $userInfo.0.ask==0}
+						<tr height='140'>
+							<td>{hd if $smarty.session.uid==$smarty.get.uid}你{hd else}Ta{hd /if}还没有进行过提问</td>
+						</tr>
+
+						<tr>
+							<th class='t1'>标题</th>
+							<th>回答数</th>
+							<th class='t3'>更新时间</th>
+						</tr>
+					{hd else}
+						{hd section loop=$askData name=n}
+							<tr>
+								<td class='t1'>
+									<a href="index.php?c=Ask&asid={hd $askData[n].asid}&cid={hd $askData[n].cid}">{hd $askData[n].content}</a>
+								</td>
+								<td>{hd $askData[n].answer}</td>
+								<td class='t3'>{hd $askData[n].time|date_format:'%Y-%m-%d %H:%M:%S'}</td>
+							</tr>
+						{hd /section}
+					{hd /if}
+				</table>
+			</div>
+
+
+			<div class='list'>
+				<p><span>{hd if $smarty.session.uid==$smarty.get.uid}我{hd else}Ta{hd /if}的回答 <b>(共{hd $allAns}条)</b></span><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=answer">更多>></a></p>
+				<table>
+					{hd if $userInfo.0.answer==0}
+						<tr height='140'>
+							<td>{hd if $smarty.session.uid==$smarty.get.uid}你{hd else}Ta{hd /if}还没有进行过回答</td>
+						</tr>
+
+						<tr>
+							<th class='t1'>标题</th>
+							<th>回答数</th>
+							<th class='t3'>更新时间</th>
+						</tr>
+					{hd else}
+						{hd section loop=$answerData name=n}
+							<tr>
+								<td class='t1'>
+									<a href="index.php?c=Ask&asid={hd $answerData[n].asid}&cid={hd $answerData[n].cid}">{hd $answerData[n].content}</a>
+								</td>
+								<td>{hd $answerData[n].answer}</td>
+								<td class='t3'>{hd $answerData[n].time|date_format:'%Y-%m-%d %H:%M:%S'}</td>
+							</tr>
+						{hd /section}
+					{hd /if}
+				</table>
+			</div>
+		</div>
+	</div>
+<!--------------------中部结束-------------------->
+
+<!--------------------底部-------------------->
+<!-- 底部 -->
+	<div id='bottom'>
+		<p>Copyright © 2013 Qihoo.Com All Rights Reserved 后盾网</p>
+		<p>京公安网备xxxxxxxxxxxx</p>
+	</div>
+<!--[if IE 6]>
+    <script type="text/javascript" src="./Js/iepng.js"></script>
+    <script type="text/javascript">
+    	DD_belatedPNG.fix('.logo','background');
+        DD_belatedPNG.fix('.nav-sel a','background');
+        DD_belatedPNG.fix('.ask-cate i','background');
+    </script>
+<![endif]-->
+</body>
+</html>
+<!-- 底部结束 -->

@@ -1,0 +1,60 @@
+<!-- 左侧 -->
+<div id='left'>
+		<div class='userinfo'>
+			<dl>
+				<dt>
+					<a href="index.php?c=My&uid={hd $smarty.get.uid}&a=face"><img src="{hd if !$userInfo.0.face}Public/Home/Images/noface.gif{hd else}{hd $userInfo.0.face}{hd /if}" width='48' height='48' alt="占位符"/></a>
+				</dt>
+				<dd class='username'>
+					<a href=""><b>{hd $userInfo.0.username}</b>
+					</a>
+					<a href="">
+						<i class='level lv1' title='Level 1'></i>
+					</a>
+				</dd>
+				<dd>金币：<a href="" style="color: #888888;"><b class='point'>{hd $userInfo.0.point}</b></a></dd>
+				<dd>经验值：{hd $userInfo.0.exp}</dd>
+			</dl>
+			<table>
+				<tr>
+					<td>回答数</td>
+					<td>采纳率</td>
+					<td class='last'>提问数</td>
+				</tr>
+				<tr>
+					<td><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=answer">{hd $userInfo.0.answer}</a></td>
+					{hd if $userInfo.0.answer!=0}
+					<td><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=answer">{hd $userInfo.0.accept/$userInfo.0.answer*100|string_format:'%.2f'}%</a></td>
+					{hd else}
+					<td><a href="">0%</a></td>
+					{hd /if}
+					<td class='last'><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=ask">{hd $userInfo.0.ask}</a></td>
+				</tr>
+			</table>
+		</div>
+
+	<ul>
+		<li class='myhome {hd if $cur==0}cur{hd /if}'>
+			<a href="index.php?c=My&uid={hd $smarty.get.uid}">{hd if $smarty.session.uid==$smarty.get.uid}我{hd else}Ta{hd /if}的首页</a>
+		</li>
+		<li class='myask {hd if $cur==1}cur{hd /if}'>
+			<a href="index.php?c=My&uid={hd $smarty.get.uid}&a=ask">{hd if $smarty.session.uid==$smarty.get.uid}我{hd else}Ta{hd /if}的提问</a>
+		</li>
+		<li class='myanswer {hd if $cur==2}cur{hd /if}'>
+			<a href="index.php?c=My&uid={hd $smarty.get.uid}&a=answer">{hd if $smarty.session.uid==$smarty.get.uid}我{hd else}Ta{hd /if}的回答</a>
+		</li>
+		{hd if $smarty.session.uid==$smarty.get.uid}
+		<li class='mylevel {hd if $cur==3}cur{hd /if}'>
+			<a href="index.php?c=My&uid={hd $smarty.get.uid}&a=level">我的等级</a>
+		</li>
+		<li class='mygold {hd if $cur==4}cur{hd /if}'>
+			<a href="index.php?c=My&uid={hd $smarty.get.uid}&a=gold">我的金币</a>
+		</li>
+		<li class='myface {hd if $cur==5}cur{hd /if}'>
+			<a href="index.php?c=My&uid={hd $smarty.get.uid}&a=face">上传头像</a>
+		</li>
+		{hd /if}
+		<li style="background:none"></li>
+	</ul>
+</div>
+<!-- 左侧结束 -->

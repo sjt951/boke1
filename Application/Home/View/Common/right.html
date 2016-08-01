@@ -1,0 +1,113 @@
+<!-- 右侧 -->
+		<div id='right'>
+		{hd if $smarty.session.uid}
+		<div class='userinfo'>
+			<dl>
+				<dt>
+					<a href="index.php?c=My&uid={hd $userInfo.0.uid}"><img src="{hd if !$userInfo.0.face}Public/Home/Images/noface.gif{hd else}{hd $userInfo.0.face}{hd /if}" width='48' height='48' alt="占位符"/></a>
+				</dt>
+				<dd class='username'>
+					<a href="index.php?c=My&uid={hd $userInfo.0.uid}">
+						<b>{hd $userInfo.0.username}</b>
+					</a>
+					<a href="">
+						<i class='level lv1' title='Level 1'></i>
+					</a>
+				</dd>
+				<dd>金币：<a href="" style="color: #888888;">{hd $userInfo.0.point}<b class='point'></b></a></dd>
+				<dd>经验值：{hd $userInfo.0.exp}</dd>
+			</dl>
+			<table>
+				<tr>
+					<td>回答数</td>
+					<td>采纳率</td>
+					<td class='last'>提问数</td>
+				</tr>
+				<tr>
+					<td><a href="index.php?c=My&a=answer&uid={hd $userInfo.0.uid}">{hd $userInfo.0.answer}</a></td>
+					{hd if $userInfo.0.answer!=0}
+					<td><a href="index.php?c=My&a=answer&uid={hd $userInfo.0.uid}">{hd $userInfo.0.accept/$userInfo.0.answer*100|string_format:'%.2f'}%</a></td>
+					{hd else}
+					<td><a href="index.php?c=My&a=answer&uid={hd $userInfo.0.uid}">0%</a></td>
+					{hd /if}
+					<td class='last'><a href="index.php?c=My&a=ask&uid={hd $userInfo.0.uid}">{hd $userInfo.0.ask}</a></td>
+				</tr>
+			</table>
+			<ul>
+				<li><a href="index.php?c=My&a=ask&uid={hd $userInfo.0.uid}">我提问的</a></li>
+				<li><a href="index.php?c=My&a=answer&uid={hd $userInfo.0.uid}">我回答的</a></li>
+			</ul>
+		</div>
+		{hd else}
+		<div class='r-login'>
+			<span class='login'><i></i>&nbsp;登录</span>
+			<span class='register'><i></i>&nbsp;注册</span>
+		</div>
+		{hd /if}
+	<div class='clear'></div>
+	<div class='star'>
+	{hd if $day}
+	<p class='title'>后盾问答之星</p>
+		<span class='star-name'>本日回答问题最多的人</span>
+			<div class='star-info'>
+				<div>
+					<a href="index.php?c=My&uid={hd $day.0.uid}" class='star-face'>
+						<img src="{hd if !$day.0.face}Public/Home/Images/noface.gif{hd else}{hd $day.0.face}{hd /if}" width='48px' height='48px' alt="头像站位"/>
+					</a>
+					<ul>
+						<li><a href="index.php?c=My&uid={hd $day.0.uid}">{hd $day.0.username}</a></li>
+						<i class='level lv1' title='Level 1'></i>
+					</ul>
+				</div>
+				<ul class='star-count'>
+					<li>回答数：<span>{hd $day.0.answer}</span></li>
+					{hd if $day.0.answer!=0}
+						<li>采纳率：<span>{hd $day.0.accept/$day.0.answer*100|string_format:'%.2f'}%</span></li>
+					{hd else}
+						<li>采纳率：<span>0%</span></li>
+					{hd /if}
+
+				</ul>
+			</div>
+		{hd /if}
+		<span class='star-name'>历史回答问题最多的人</span>
+
+		<div class='star-info'>
+			<div>
+				<a href="index.php?c=My&uid={hd $lishi.0.uid}" class='star-face'>
+					<img src="{hd if !$lishi.0.face}Public/Home/Images/noface.gif{hd else}{hd $lishi.0.face}{hd /if}" width='48px' height='48px' alt="头像站位"/>
+				</a>
+				<ul>
+					<li><a href="index.php?c=My&uid={hd $lishi.0.uid}">{hd $lishi.0.username}</a></li>
+					<i class='level lv1' title='Level 1'></i>
+				</ul>
+			</div>
+			<ul class='star-count'>
+				<li>回答数：<span>{hd $lishi.0.answer}</span></li>
+				{hd if $lishi.0.answer!=0}
+					<li>采纳率：<span>{hd $lishi.0.accept/$lishi.0.answer*100|string_format:'%.2f'}%</span></li>
+				{hd else}
+					<li>采纳率：<span>0%</span></li>
+				{hd /if}
+			</ul>
+		</div>
+	</div>
+	<div class='star-list'>
+		<p class='title'>后盾问答助人光荣榜</p>
+		<div>
+			<ul class='ul-title'>
+				<li>用户名</li>
+				<li style='text-align:right;'>帮助过的人数</li>
+			</ul>
+			<ul class='ul-list'>
+				{hd section loop = $help name=n}
+					<li>
+						<a href="index.php?c=My&uid={hd $help[n].uid}"><i class='rank r1'></i>{hd $help[n].username}</a>
+						<span>{hd $help[n].accept}</span>
+					</li>				
+				{hd /section}
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- ---右侧结束---- -->

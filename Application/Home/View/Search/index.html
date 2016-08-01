@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>后盾问答</title>
+	<meta name="keywords" content="后盾问答"/>
+	<meta name="description" content="后盾问答"/>
+	<link rel="stylesheet" href="Public/Home/Css/common.css" />
+	<script type="text/javascript" src='Public/Home/Js/jquery-1.7.2.min.js'></script>
+	<link rel="stylesheet" href="Public/Home/Css/index.css" />
+</head>
+<body>
+	<!-- 搜索顶部 -->
+	<div class="search_top">
+		<div class="sealeft">
+			<a href=""><img src="./images/t0150f9b7bd1b41d84e.png" alt="" /></a>
+			<a href="http://www.houdunwang.com">后盾顶尖PHP培训</a>
+			<a href="http://www.houdunwang.com">后盾网</a>
+		</div>
+
+	</div>
+	<!-- 搜索顶部结束 -->
+	<!-- 搜索框 -->
+	<div class="search_box">
+		<form action="index.php?c=Search" method='post'>
+			<input type="text" name="content" class="searchInput" value="{hd $content}" />
+			<input type="submit" value="搜索答案" class="sub"/>
+		</form>
+		<a href="index.php?c=Question">我要提问</a>
+	</div>
+	<!-- 搜索框结束 -->
+	<!-- 搜索内容 -->
+	<div class="searcont">
+		{hd section loop=$data name=n}
+			<ul>
+				<li> <a href="index.php?c=Ask&asid={hd $data[n].asid}&cid={hd $data[n].cid}" class="title">{hd $data[n].acon}</a> </li>
+				<li>{hd $data[n].content}</li>
+				<li class="time"><span>
+				
+				{hd section loop=$data[n].cate name=c}
+						{hd $data[n].cate[c].title} - 
+				{hd /section}
+
+				{hd $data[n].answer}个回答</span> - 提问时间: {hd $data[n].time|date_format:'%Y-%m-%d %H:%M:%S'}</li>
+			</ul>
+		{hd /section}
+	</div>
+	<!-- 搜索内容结束 -->
+{hd include file="../Common/bottom.html"}

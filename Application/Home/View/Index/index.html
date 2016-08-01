@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>后盾问答</title>
+	<meta name="keywords" content="后盾问答"/>
+	<meta name="description" content="后盾问答"/>
+	<link rel="stylesheet" href="Public/Home/Css/index.css" />
+	{hd include file="../Common/top.html"}
+	<script type="text/javascript" src='Public/Home/Js/index.js'></script>
+	<div class='main'>
+		<div id='left'>
+			<p class='left-title'>所有问题分类</p>
+			<ul class='left-list'>
+				{hd section loop=$cateData name=top}
+				<li class='list-l1'>
+					<div class='list-l1-wrap'>
+						
+						<h4><a href="index.php?c=list&cid={hd $cateData[top].cid}">{hd $cateData[top].title}</a></h4>
+						<ul class='list-l2'>
+							{hd section loop=$cateData[top].son name=son max=3}
+							<li><a href="index.php?c=list&cid={hd $cateData[top].cid}">{hd $cateData[top].son[son].title}</a></li>
+							{hd /section}
+						</ul>
+					</div>
+
+					<div class='list-more hidden'>
+						<ul>
+							{hd section loop=$cateData[top].son name=son start=3}
+							<li><a href="index.php?c=list&cid={hd $cateData[top].cid}">{hd $cateData[top].son[son].title}</a></li>
+							{hd /section}
+						</ul>
+					</div>
+				</li>
+				{hd /section}
+			</ul>
+		</div>
+
+
+
+		<div id='center'>
+			<div id='animate'>
+				<div class='imgs-wrap'>
+					<ul>
+						<li>
+							<a href=""><img src="Public/Home/Images/animate1.jpg" width='558' height='190'/></a>
+						</li>
+						<li>
+							<a href=""><img src="Public/Home/Images/animate2.jpg" width='558' height='190'/></a>
+						</li>
+						<li>
+							<a href=""><img src="Public/Home/Images/animate3.jpg" width='558' height='190'/></a>
+						</li>
+					</ul>
+				</div>
+				<ul class='ani-btn'>
+					<li class='ani-btn-cur'>0学费学习<i></i></li>
+					<li>超百G原创视频<i></i></li>
+					<li style='border:none'>有实力做后盾<i></i></li>
+				</ul>
+			</div>
+
+			<dl class='answer-list'>
+				<dt>
+					<span class='wait-as'>待解决问题</span>
+					<a href='index.php?c=List&cid=0'>更多>></a>
+				</dt>
+				{hd section loop=$noSolve name=ask}
+				<dd>
+					<a href="index.php?c=Ask&asid={hd $noSolve[ask].asid}&cid={hd $noSolve[ask].cid}">{hd $noSolve[ask].content}</a>
+					<span>{hd $noSolve[ask].answer}回答</span>
+				</dd>
+				{hd /section}
+			</dl>
+
+			<dl class='answer-list'>
+				<dt>
+					<span class='reward-as'>高分悬赏问题</span>
+					<a href='index.php?c=List&cid=0&w=2'>更多>></a>
+				</dt>
+				{hd section loop=$rewardData name=reward}
+				<dd>
+					<a href="index.php?c=Ask&asid={hd $rewardData[reward].asid}&cid={hd $rewardData[reward].cid}"><b>{hd $rewardData[reward].reward}</b>{hd $rewardData[reward].content}</a>
+					<span>{hd $rewardData[reward].answer}回答</span>
+				</dd>
+				{hd /section}
+			</dl>
+
+		</div>
+		
+		{hd include file="../Common/right.html"}
+	</div>
+<!--------------------内容主体结束-------------------->
+	<div class='clear'></div>
+	{hd include file="../Common/bottom.html"}

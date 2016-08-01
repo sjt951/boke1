@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>后盾问答</title>
+	<meta name="keywords" content="后盾问答"/>
+	<meta name="description" content="后盾问答"/>
+
+	<link rel="stylesheet" href="Public/Home/Css/question.css" />
+	{hd include file="../Common/top.html"}
+	<script type="text/javascript" src="Public/Home/Js/question.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#anw-sub').click(function(){
+					var cons = $('textarea[name=content]');
+					//如果内容为空
+					if(cons.val() == ''){
+					alert('请输入回答内容！');
+					return false;
+				}
+			});
+			
+		})
+	</script>
+	<div id='location'>
+		<a href="index.php?c=List&cid=0">全部分类</a>
+		{hd section loop=$fatherCate name=n}
+			{hd if $smarty.section.n.last}
+				&gt;&nbsp;{hd $fatherCate[n].title}&nbsp;&nbsp;
+			{hd else}
+				&gt;&nbsp;<a href="index.php?c=List&cid={hd $fatherCate[n].cid}">{hd $fatherCate[n].title}</a>&nbsp;&nbsp;
+			{hd /if}
+		{hd /section}
+	</div>
+
+<!--------------------中部-------------------->
+	<div id='center-wrap'>
+		<div id='center'>
+			<div id='left'>
+				<div id='answer-info'>
+					<!-- 如果没有解决用wait -->
+					<div class='ans-state {hd if $askData.solve==0} wait {hd /if}'></div>
+					<div class='answer'>
+						<p class='ans-title'>{hd $askData.content}
+							<b class='point'>20</b>
+						</p>
+					</div>
+					<ul>
+						<li><a href="index.php?c=My&uid={hd $askData.uid}">{hd $askData.username}</a></li>
+						<li><i class='level lv1' title='Level 1'></i></li>
+						<li>{hd $askData.time|date_format:'%Y-%m-%d %H:%M:%S'}</li>
+				
+					</ul>
+					<!--1.必须登陆-->
+					<!--2.问题不能是自己的问题-->
+					<!--3.问题必须没有被解决-->
+					{hd if $smarty.session.user and $smarty.session.uid and $smarty.session.uid != $askData.uid and $askData.solve == 0}
+					<div class='ianswer'>
+						<form action="index.php?c=Ask&a=ans&asid={hd $askData.asid}" method='POST'>
+							<p>我来回答</p>
+							<textarea name="content"></textarea>
+							<input type="hidden" name='qid' value=''>
+							<input type="submit" value='提交回答' id='anw-sub'/>
+							<p class='right'>您还可以输入<span id='num'>50</span>个字</p>
+						</form>
+					</div>
+					{hd /if}
+					<!-- 满意回答 -->
+					{hd if $askData.solve == 1}
+					<div class='ans-right'>
+						<p class='title'><i></i>满意回答<span></span></p>
+						<p class='ans-cons'>{hd $niceData.content}</p>
+						<dl>
+							<dt>
+								<a href="index.php?c=My&uid={hd $niceData.uid}"><img src="{hd if !$niceData.face}Public/Home/Images/noface.gif{hd else}{hd $niceData.face}{hd /if}" width='48' height='48'/></a>
+							</dt>
+							<dd>
+								<a href="index.php?c=My&uid={hd $niceData.uid}">{hd $niceData.username}</a>
+							</dd>
+							<dd><i class='level lv1'></i></dd>
+						{hd if $userInfo.0.answer!=0}
+						<dd>{hd $niceData.accept/$niceData.answer*100|string_format:'%.2f'}%</dd>
+						{hd else}
+						<dd>0%</dd>
+						{hd /if}
+							
+
+						</dl>
+					</div>
+					{hd /if}
+					<!-- 满意回答 -->
+				</div>
+
+				<div id='all-answer'>
+					<div class='ans-icon'></div>
+					<p class='title'>共 <strong>{hd $ask.0.answer}</strong> 条回答</p>
+					<ul>
+						{hd section loop=$ansData name=n}
+						<li>
+							<div class='face'>
+								<a href="">
+									<img src="Public/Home/Images/noface.gif" width='48' height='48'/>
+								</a>
+							</div>
+							<div class='cons blue'>
+								<p>{hd $ansData[n].content}<span style='color:#888;font-size:12px'>&nbsp;&nbsp;({hd $ansData[n].time|date_format:'%Y-%m-%d %H:%M:%S'})</span></p>
+							</div>
+							{hd if $smarty.session.user and $smarty.session.uid and $smarty.session.uid == $askData.uid and $askData.solve == 0}
+								<a href="index.php?c=Ask&a=accept&asid={hd $ansData[n].asid}&uid={hd $ansData[n].uid}&anid={hd $ansData[n].anid}&cid={hd $ansData[n].cid}" class='adopt-btn'>采纳</a>
+							{hd /if}
+							
+						</li>
+						{hd /section}
+					</ul>
+				</div>
+				<div id='other-ask'>
+					<p class='title'>待解决的相关问题</p>
+					<table>
+						{hd section loop=$qusData name=n}
+						<tr>
+							<td class='t1'><a href="index.php?c=Ask&asid={hd $qusData[n].asid}&cid={hd $qusData[n].cid}">{hd $qusData[n].content}</a></td>
+							<td>{hd $qusData[n].answer}&nbsp;回答</td>
+							<td>{hd $qusData[n].time|date_format:'%Y-%m-%d %H:%M:%S'}</td>
+						</tr>
+						{hd /section}
+					</table>
+				</div>
+			</div>
+		
+	{hd include file="../Common/right.html"}
+			
+		</div>
+
+	</div>
+	
+<!--------------------中部结束-------------------->
+
+
+	{hd include file="../Common/bottom.html"}

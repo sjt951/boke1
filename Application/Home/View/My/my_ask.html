@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>后盾问答</title>
+	<meta name="keywords" content="后盾问答"/>
+	<meta name="description" content="后盾问答"/>
+	{hd include file="../Common/top.html"}
+	<link rel="stylesheet" href="Public/Home/Css/member.css" />
+	<script type="text/javascript" src='Public/Home/Js/member.js'></script>
+	<script type="text/javascript">
+
+	</script>
+
+<!--------------------中部-------------------->
+	<div id='center'>
+	{hd include file="../Common/left.html"}
+		<div id='right'>
+			<p class='title'>我的提问</p>
+			<ul class='ask-filter'>
+				<li {hd if $smarty.get.w!=2}class='cur'{hd /if}><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=ask&w=1">待解决问题</a></li>
+				<li {hd if $smarty.get.w==2}class='cur'{hd /if}><a href="index.php?c=My&uid={hd $smarty.get.uid}&a=ask&w=2">已解决问题</a></li>
+			</ul>
+			<div class='list list-filter {hd if $smarty.get.w==2}hidden{hd /if}'>
+				<table>
+					{hd if !$waitAsk}
+						<tr height='140'>
+							<td>{hd if $smarty.session.uid==$smarty.get.uid}你{hd else}Ta{hd /if}还没有待解决的提问</td>
+						</tr>
+					{hd else}
+							<tr>
+								<th class='t1'>标题</th>
+								<th>回答</th>
+								<th class='t3'>时间</th>
+							</tr>
+
+						{hd section loop=$waitAsk name=n}
+							<tr>
+								<td class='t1'>
+									<a href="index.php?c=Ask&asid={hd $waitAsk[n].asid}&cid={hd $waitAsk[n].cid}">{hd $waitAsk[n].content}</a>
+								</td>
+								<td>{hd $waitAsk[n].answer}</td>
+								<td class='t3'>{hd $waitAsk[n].time|date_format:'%Y-%m-%d %H:%M:%S'}</td>
+							</tr>
+						{hd /section}
+					{hd /if}
+				</table>
+
+			</div>
+			<div class='list list-filter {hd if $smarty.get.w!=2}hidden{hd /if}'>
+				<table>
+					{hd if !$okAsk}
+						<tr height='140'>
+							<td>{hd if $smarty.session.uid==$smarty.get.uid}你{hd else}Ta{hd /if}还没有已解决的提问</td>
+						</tr>
+					{hd else}
+							<tr>
+								<th class='t1'>标题</th>
+								<th>回答</th>
+								<th class='t3'>时间</th>
+							</tr>
+						{hd section loop=$okAsk name=n}
+							<tr>
+								<td class='t1'>
+									<a href="index.php?c=Ask&asid={hd $okAsk[n].asid}&cid={hd $okAsk[n].cid}">{hd $okAsk[n].content}</a>
+								</td>
+								<td>{hd $okAsk[n].answer}</td>
+								<td class='t3'>{hd $okAsk[n].time|date_format:'%Y-%m-%d %H:%M:%S'}</td>
+							</tr>
+						{hd /section}
+					{hd /if}
+				</table>
+			</div>
+		</div>
+	</div>
+<!--------------------中部结束-------------------->
+<!-- 底部 -->
+	<div id='bottom'>
+		<p>Copyright © 2013 Qihoo.Com All Rights Reserved 后盾网</p>
+		<p>京公安网备xxxxxxxxxxxx</p>
+	</div>
+<!--[if IE 6]>
+    <script type="text/javascript" src="./Js/iepng.js"></script>
+    <script type="text/javascript">
+    	DD_belatedPNG.fix('.logo','background');
+        DD_belatedPNG.fix('.nav-sel a','background');
+        DD_belatedPNG.fix('.ask-cate i','background');
+    </script>
+<![endif]-->
+</body>
+</html>
+<!-- 底部结束 -->
